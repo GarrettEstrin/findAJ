@@ -2,11 +2,11 @@
 "manifest_version": 2,
   "name": "Find AJ!",
   "version": "0.1",
-  "description": "Hides a picture, of the best dog in the world, somewhere in the current page and you have to find her!",
+  "description": "Hides a picture of the best dog in the world somewhere in the current page and you have to find her!",
   "icons": { "128": "logo-large.png" },
   "background": {
     "persistent": true,
-    "scripts": ["background.js"]
+    "scripts": ["bg.js"]
   },
   "permissions": ["tabs", "storage"],
   "browser_action": {
