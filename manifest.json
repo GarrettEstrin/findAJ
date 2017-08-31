@@ -6,7 +6,7 @@
   "icons": { "128": "logo-large.png" },
   "background": {
     "persistent": true,
-    "scripts": ["bg.js"]
+    "scripts": ["popup.js"]
   },
   "permissions": ["tabs", "storage"],
   "browser_action": {
