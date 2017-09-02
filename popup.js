@@ -8,7 +8,8 @@ var setup = {};
 setup.setUpScore = function(){
     console.log("retriveScore running")
     // find number of times the player has found Aj
-    if(!localStorage['score']){
+    if(!localStorage['score'] || localStorage['score'] == 'NaN'){
+        console.log("no score data found. Creating namespace: score")
         localStorage['score'] = 0;
     }
 }
