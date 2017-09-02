@@ -7,6 +7,7 @@ function foundHer(){
   child.src = "https://s3-us-west-2.amazonaws.com/garrettbeer/logo-large.png";
   child.style.top = "50%";
   child.style.left = "50%";
+  child.style.zIndex = 1000000;
   child.style.height = "250px";
   child.style.margin = "-125px -125px";
   setTimeout(function() {
