@@ -1,5 +1,34 @@
 console.log('popup js loaded');
 var hideBtn = document.getElementById('hideBtn');
+
+// general setup
+var setup = {};
+
+// setup localStorage to save score
+setup.setUpScore = function(){
+    console.log("retriveScore running")
+    // find number of times the player has found Aj
+    if(!localStorage['score']){
+        localStorage['score'] = 0;
+    }
+}
+// function to retrive score
+setup.retrieveScore = function(){
+    return parseInt(localStorage['score']);
+}
+// function to update the score board
+setup.showScore = function(){
+    console.log('showScore running');
+    document.getElementById('score').innerText = parseInt(localStorage['score']);
+    hideBtn.innerText = "Hide AJ!"
+}
+// function to save score to localStorage
+setup.updateAndSaveScore = function(){
+    console.log('updateAndSaveScore running');
+    localStorage['score'] = parseInt(localStorage['score']) + 1;
+    setup.showScore();
+}
+// eventlistener for hide aj button
 hideBtn.addEventListener('click', function(){
     chrome.tabs.query({active: true, 'currentWindow': true}, function(tabs) {
         activeTab = tabs[0];
@@ -7,35 +36,27 @@ hideBtn.addEventListener('click', function(){
         hideBtn.innerText = "She's Hiding!"
     });
 })
-// general setup
-var setup = {};
-// find number of times the player has found Aj
-if(localStorage['numOfTimesFound']){
-    setup.numOfTimesFound = parseInt(localStorage['numOfTimesFound'])
-} else {
-    localStorage['numOfTimesFound'] = 0;
-    setup.numOfTimesFound = parseInt(localStorage['numOfTimesFound'])
-}
-// function to update the score
-function showScore(){
-    setup.numOfTimesFound = localStorage['numOfTimesFound']
-    document.getElementById('score').textContent = setup.numOfTimesFound;
-}
-showScore();
-
-
 // message listener for finding AJ
 chrome.runtime.onMessage.addListener(
-    function(request, sender, sendResponse){
-        console.log(request)        
+    function(request, sender, sendResponse){       
         if(request.foundHer === "true"){
-                if(request.foundHer === "true"){
-                    localStorage['numOfTimesFound'] = parseInt(localStorage['numOfTimesFound']) + 1
-                    showScore();
-                }
+            console.log("She was found");
+            setup.updateAndSaveScore();
         }
     }
 )
+
+// functions to run on start
+setup.setUpScore();
+setup.retrieveScore();
+setup.showScore();
+
+// functions to run when extension is opened
+chrome.browserAction.onClicked.addListener(function(tab){ 
+    console.log("extension was opened")
+    setup.retrieveScore();
+    setup.showScore();
+});
 
 
 
